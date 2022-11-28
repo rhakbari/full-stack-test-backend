@@ -10,7 +10,7 @@
 
 - Currently the backend is running on localhost:8000
 
-- Run the below command in your terminal to run the backend:
+- Run the below command in your terminal to get started:
 
 ```
 go run main.go
