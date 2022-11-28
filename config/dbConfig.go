@@ -1,6 +1,7 @@
 package config
 
 import (
+	"os"
 	"packform/full-stack-test-backend/models"
 	"packform/full-stack-test-backend/query"
 
@@ -11,8 +12,13 @@ import (
 var DB *gorm.DB
 
 func Connect() {
+	DB_HOST := os.Getenv("S3_BUCKET")
+	DB_USERNAME := os.Getenv("S3_BUCKET")
+	DB_PASSWORD := os.Getenv("S3_BUCKET")
+	DATABASE := os.Getenv("S3_BUCKET")
+	DBPORT := os.Getenv("SECRET_KEY")
 
-	db, err := gorm.Open(postgres.Open("host=localhost user=postgres password=password dbname=postgres port=5432"))
+	db, err := gorm.Open(postgres.Open("host=" + DB_HOST + "user=" + DB_USERNAME + "password=" + DB_PASSWORD + "dbname=" + DATABASE + "port=" + DBPORT))
 	if err != nil {
 		panic(err)
 	}

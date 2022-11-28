@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"packform/full-stack-test-backend/config"
 	"packform/full-stack-test-backend/routes"
 
@@ -20,12 +21,12 @@ func main() {
 			return origin == "*"
 		},
 	}))
-
+	port := os.Getenv("BACKEND_PORT")
 	routes.GetOrder(r)
 	routes.GetOrderItems(r)
 	routes.GetCustomerCompany(r)
 	routes.GetDelivery(r)
 	routes.GetCustomers(r)
 	config.Connect()
-	r.Run(":8000")
+	r.Run(port)
 }
