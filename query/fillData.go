@@ -7,7 +7,7 @@ import (
 func FillDB(db *gorm.DB) error {
 	if db.Migrator().HasTable("customer_companies") {
 		db.Exec(`DO $$
-		begin IF EXISTS (select * FROM order_items limit 1) THEN
+		begin IF EXISTS (select * FROM customer_companies limit 1) THEN
 		ELSE
 		COPY customer_companies(company_id, company_name) FROM '/tmp/test_data/customer_companies.csv' DELIMITER ',' CSV HEADER;
 		END if;
@@ -15,7 +15,7 @@ func FillDB(db *gorm.DB) error {
 	}
 	if db.Migrator().HasTable("customers") {
 		db.Exec(`DO $$
-		begin IF EXISTS (select * FROM order_items limit 1) THEN
+		begin IF EXISTS (select * FROM customers limit 1) THEN
 		ELSE
 		COPY customers(user_id, login, password, name, company_id, credit_cards) FROM '/tmp/test_data/customers.csv' DELIMITER ',' CSV HEADER;
 		END if;
@@ -35,15 +35,17 @@ func FillDB(db *gorm.DB) error {
 	if db.Migrator().HasTable("orders") {
 
 		db.Exec(`DO $$
-		begin IF EXISTS (select * FROM order_items limit 1) THEN
+		begin IF EXISTS (select * FROM orders limit 1) THEN
 		ELSE
-		COPY orders(id,created_at, order_name, customer_id) FROM '/tmp/test_data/orders.csv' DELIMITER ',' CSV HEADER;
+		COPY orders(id,created_at, order_name, customer_id) FROM '/tmp/test_data/orders.csv'
+		DELIMITER ',' 
+		CSV HEADER;
 		END if;
 		END $$;`)
 	}
 	if db.Migrator().HasTable("deliveries") {
 		db.Exec(`DO $$
-		begin IF EXISTS (select * FROM order_items limit 1) THEN
+		begin IF EXISTS (select * FROM deliveries limit 1) THEN
 		ELSE
 		COPY deliveries(id, order_item_id, delivered_quantity) FROM '/tmp/test_data/deliveries.csv' DELIMITER ',' CSV HEADER;
 		END if;
