@@ -5,6 +5,7 @@ import (
 	"packform/full-stack-test-backend/models"
 	"packform/full-stack-test-backend/query"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -12,13 +13,14 @@ import (
 var DB *gorm.DB
 
 func Connect() {
-	DB_HOST := os.Getenv("S3_BUCKET")
-	DB_USERNAME := os.Getenv("S3_BUCKET")
-	DB_PASSWORD := os.Getenv("S3_BUCKET")
-	DATABASE := os.Getenv("S3_BUCKET")
-	DBPORT := os.Getenv("SECRET_KEY")
+	godotenv.Load()
+	HOST := os.Getenv("DB_HOST")
+	USERNAME := os.Getenv("USERNAME")
+	DB_PASSWORD := os.Getenv("DB_PASSWORD")
+	DATABASE := os.Getenv("DATABASE")
+	DB_PORT := os.Getenv("DB_PORT")
 
-	db, err := gorm.Open(postgres.Open("host=" + DB_HOST + "user=" + DB_USERNAME + "password=" + DB_PASSWORD + "dbname=" + DATABASE + "port=" + DBPORT))
+	db, err := gorm.Open(postgres.Open("host=" + HOST + " user=" + USERNAME + " password=" + DB_PASSWORD + " dbname=" + DATABASE + " port=" + DB_PORT))
 	if err != nil {
 		panic(err)
 	}
